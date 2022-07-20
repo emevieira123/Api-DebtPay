@@ -1,0 +1,53 @@
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mysql"
+  url      = env("DATABASE_URL")
+}
+
+model Users {
+  id       String @id @default(uuid())
+  name     String
+  email    String @unique
+  password String
+
+  debt     Debt[]
+  parcelas Parcelas[]
+  @@map("users")
+}
+
+model Debt {
+  id         String   @id @default(uuid())
+  name_debt  String
+  produto    String
+  created_at DateTime @default(now())
+
+  id_user String
+  user    Users  @relation(fields: [id_user], references: [id])
+
+  parcelas Parcelas[]
+  @@map("debt")
+}
+
+model Parcelas {
+  id             String   @id @default(uuid())
+  valor_parcela  Int
+  dia_vencimento Int
+  qtde_parcelas  Int
+  status         Boolean
+  created_at     DateTime @default(now())
+  updated_at     DateTime @default(now())
+
+  id_user String
+  user    Users  @relation(fields: [id_user], references: [id])
+
+  id_debt String
+  debt    Debt   @relation(fields: [id_debt], references: [id])
+
+  @@map("parcelas")
+}

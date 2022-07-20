@@ -27,4 +27,4 @@ app.use((err: Error, req: Request, res: Response, next: NextFunction) => {
   })
 })
 
-app.listen(4000, () => console.log('Server is running in port 4000!'));
+app.listen(process.env.PORT || 4000, () => console.log('Server is running in port 4000!'));

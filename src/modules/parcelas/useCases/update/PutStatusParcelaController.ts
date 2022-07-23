@@ -6,6 +6,7 @@ export class PutStatusParcelaController {
   async handle(req: Request, res: Response) {
     const { id_user } = req;
     const { id: id_parcela } = req.params;
+    const { status } = req.body;
 
     
     try {
@@ -13,6 +14,7 @@ export class PutStatusParcelaController {
       const parcela = await updateStatusParcelaUseCase.execute({
         id_parcela,
         id_user,
+        status,
       });
   
       return res.status(200).json(parcela);

@@ -13,6 +13,10 @@
     {
       "url": "http://localhost:4000",
       "description": "API Development"
+    },
+    {
+      "url": "https://api-debtpay-production.up.railway.app",
+      "description": "API Production"
     }
   ],
   "paths": {
@@ -21,6 +25,7 @@
         "summary": "Cadastro de usuários",
         "description": "Essa rota é para o cadastro de novos usuários",
         "tags": ["Usuários"],
+        "security": [{ "bearerAuth": [] }],
         "requestBody": {
           "content": {
             "application/json": {
@@ -91,6 +96,202 @@
           }
         }
       }
+    },
+    "/debt": {
+      "post": {
+        "summary": "Cadastro de dívidas",
+        "description": "Essa rota é para o cadastro de dívidas",
+        "tags": ["Dívidas"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "name_debt": "Avenida",
+                    "produto": "Mochila"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Login requerido"
+          },
+          "400": {
+            "description": "Erro: Todos os campos devem ser preenchidos!"
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Debts"
+                }
+              }
+            }
+          }
+        }
+      },
+      "get": {
+        "summary": "Busca todos as dívidas e suas parcelas",
+        "description": "Essa rota é para buscar todas as dívidas e parcelas do usuário",
+        "tags": ["Dívidas"],
+        "security": [{ "bearerAuth": [] }],
+        "responses": {
+          "401": {
+            "description": "Login required"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Debt"
+                }
+              }
+            }
+          }
+        }
+      }      
+    },
+    "/debt/{id}": {
+      "get": {
+        "summary": "Busca dívida pelo ID",
+        "description": "Essa rota é para busca dívida pelo id",
+        "tags": ["Dívidas"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Insira o ID da dívida para buscar",
+            "required": true
+          }
+        ],
+        "responses": {
+          "401": {
+            "description": "Login requerido"
+          },
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Debt"
+                }
+              }
+            }
+          }
+        }
+      }
+    },
+    "/parcelas": {
+      "post": {
+        "summary": "Cadastro de parcelas",
+        "description": "Essa rota é para o cadastro de parcelas",
+        "tags": ["Parcelas"],
+        "security": [{ "bearerAuth": [] }],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "valor_parcela": 83,
+                    "dia_vencimento": 15,
+                    "qtde_parcelas": 4,
+                    "id_debt": "a9b4a377-85d5-4201-b76a-7b38f12e7599"
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "401": {
+            "description": "Login requerido"
+          },
+          "400": {
+            "description": "Erro: Todos os campos devem ser preenchidos!"
+          },
+          "201": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/Parcelas"
+                }
+              }
+            }
+          }
+        }
+      }      
+    },
+    "/parcelas/{id}": {
+      "put": {
+        "description": "Alterar status da parcelas",
+        "summary": "Essa rota altera o status de uma parcela",
+        "tags": ["Parcelas"],
+        "security": [{ "bearerAuth": [] }],
+        "parameters": [
+          {
+            "name": "id",
+            "in": "path",
+            "description": "Insira o ID da parcela",
+            "required": true
+          }
+        ],
+        "requestBody": {
+          "content": {
+            "application/json": {
+              "schema": {
+                "$ref": "#/components/schemas/User"
+              },
+              "examples": {
+                "user": {
+                  "value": {
+                    "id_parcela":"011aacda-ea74-4fa8-86e9-78bfd03a79e9",
+                    "status": true
+                  }
+                }
+              }
+            }
+          }
+        },
+        "responses": {
+          "200": {
+            "description": "OK",
+            "content": {
+              "application/json": {
+                "schema": {
+                  "type": "object",
+                  "$ref": "#/components/schemas/User"
+                }
+              }
+            }
+          },
+          "401": {
+            "description":"Login required"
+          },
+          "400": {
+            "description":"Erro - não existe parcela com o ID informado!"
+          }
+        }
+      }
     }
   },
   "components": {
@@ -105,6 +306,34 @@
             "type": "string"
           },
           "password": {
+            "type": "string"
+          }
+        }
+      },
+      "Debts": {
+        "type": "object",
+        "properties": {
+          "name_debt": {
+            "type": "string"
+          },
+          "produto": {
+            "type": "string"
+          }
+        }
+      },
+      "Parcelas": {
+        "type": "object",
+        "properties": {
+          "valor_parcela": {
+            "type": "number"
+          },
+          "dia_vencimento": {
+            "type": "number"
+          },
+          "qtde_parcelas": {
+            "type": "number"
+          },
+          "id_debt": {
             "type": "string"
           }
         }

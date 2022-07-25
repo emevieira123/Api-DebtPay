@@ -12,15 +12,19 @@ export class CreateDebtUseCase {
     produto,
     id_user
   }: ICreateDebt) {
+    //Valida se foi enviado dados do frontend
+    if (name_debt === '' || produto === '') {
+      throw new Error('Erro: Todos os campos devem ser preenchidos!')
+    }
+
     // Salvar debito
     const debt = await prisma.debt.create({
       data: {
         name_debt,
         produto,
         id_user
-      }
-      
-    });
+      }      
+    });    
 
     return debt;
   }

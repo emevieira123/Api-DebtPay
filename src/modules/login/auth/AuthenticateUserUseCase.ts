@@ -15,14 +15,14 @@ export class AuthenticateUserUseCase {
     });
 
     if(!user) {
-      throw new Error("Email or password invalid!");
+      throw new Error("Não existe usuário com o email informado!");
     }
 
     // Verifica se a senha corresponde ao user
     const passwordMatch = await compare(password, user.password);
 
     if(!passwordMatch) {
-      throw new Error("Email or password invalid!");
+      throw new Error("A senha informa é inválida!");
     }
 
     // Gera um token

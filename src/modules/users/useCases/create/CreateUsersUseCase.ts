@@ -5,10 +5,11 @@ interface ICreateUsers {
   name: string;
   email: string;
   password: string;
+  github_user: string;
 }
 
 export class CreateUsersUseCase {
-  async execute({ name, email, password}: ICreateUsers) {
+  async execute({ name, email, password, github_user}: ICreateUsers) {
     // Valida se o email já existe
     const emailExist = await prisma.users.findFirst({
       where: { 
@@ -36,6 +37,7 @@ export class CreateUsersUseCase {
         name,
         email,
         password: hashPassword,
+        github_user,
       }
     });
 

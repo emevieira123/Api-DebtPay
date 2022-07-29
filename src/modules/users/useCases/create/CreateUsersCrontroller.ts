@@ -3,7 +3,7 @@ import { CreateUsersUseCase } from "./CreateUsersUseCase";
 
 export class CreateUsersController {
   async handle(req: Request, res: Response) {
-    const { name, email, password } = req.body;
+    const { name, email, password, github_user } = req.body;
 
     try {
       const createUsersUseCase = new CreateUsersUseCase();
@@ -11,6 +11,7 @@ export class CreateUsersController {
         name,
         email,
         password,
+        github_user,
       });
   
       return res.status(201).json(result);      

@@ -7,8 +7,8 @@ export class GetUserController {
     const {id: idUser} = req.params;
 
     const getUserUseCase = new GetUserUseCase();
-    const [{ id, name, email }] = await getUserUseCase.execute(idUser);
+    const [{ id, name, email, github_user }] = await getUserUseCase.execute(idUser);
 
-    return res.status(200).json({ id, name, email });
+    return res.status(200).json({ id, name, email, github_user });
   }
 }

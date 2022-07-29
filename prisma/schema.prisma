@@ -11,13 +11,15 @@ datasource db {
 }
 
 model Users {
-  id       String @id @default(uuid())
-  name     String
-  email    String @unique
-  password String
+  id          String @id @default(uuid())
+  name        String
+  email       String @unique
+  password    String
+  github_user String
 
   debt     Debt[]
   parcelas Parcelas[]
+
   @@map("users")
 }
 
@@ -31,6 +33,7 @@ model Debt {
   user    Users  @relation(fields: [id_user], references: [id])
 
   parcelas Parcelas[]
+
   @@map("debt")
 }
 

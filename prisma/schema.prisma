@@ -39,7 +39,7 @@ model Debt {
 
 model Parcelas {
   id             String   @id @default(uuid())
-  valor_parcela  Int
+  valor_parcela  Decimal
   dia_vencimento Int
   qtde_parcelas  Int
   status         Boolean

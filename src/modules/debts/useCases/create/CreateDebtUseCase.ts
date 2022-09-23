@@ -14,7 +14,7 @@ export class CreateDebtUseCase {
   }: ICreateDebt) {
     //Valida se foi enviado dados do frontend
     if (name_debt === '' || produto === '') {
-      throw new Error('Erro: Todos os campos devem ser preenchidos!')
+      throw new Error('Erro: Todos os campos devem ser preenchidos!!!')
     }
 
     // Salvar debito

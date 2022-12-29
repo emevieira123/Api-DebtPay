@@ -3,7 +3,7 @@
   "info": {
     "title": "Api DebtPay",
     "description": "Essa API tem como objetivo realizar o controle dos dados do banco",
-    "termsOfService": "http://localhost:3000",
+    "termsOfService": "https://www.debtpay.tk",
     "contact": {
       "email": "emevieira@gmail.com"
     },
@@ -11,12 +11,12 @@
   },
   "servers": [
     {
-      "url": "http://localhost:4000",
-      "description": "API Development"
+      "url": "https://api-debtpay.onrender.com",
+      "description": "API Production"
     },
     {
-      "url": "https://api-debtpay-production.up.railway.app",
-      "description": "API Production"
+      "url": "http://localhost:4000",
+      "description": "API Local Development"
     }
   ],
   "paths": {

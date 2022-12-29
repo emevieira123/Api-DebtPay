@@ -6,7 +6,7 @@
   "scripts": {
     "dev": "ts-node-dev -r dotenv/config --exit-child --transpile-only --ignore-watch node_modules src/server.ts",
     "build": "npx tsc",
-    "start": "node src/server.ts"
+    "start": "node dist/server.js"
   },
   "devDependencies": {
     "@types/bcrypt": "^5.0.0",
